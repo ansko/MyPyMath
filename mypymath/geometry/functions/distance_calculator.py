@@ -183,7 +183,7 @@ class DistanceCalculator:
             return v01.length()
         elif v02.product_with(v12) <= 0:
             return v02.length()
-        height = self.__distance_point_line(Line(pt1, pt2))
+        height = self.__distance_point_line(point, Line(pt1, pt2))
         return height
 
     def __distance_point_plane(self, point, plane):
