@@ -13,6 +13,7 @@ class Line:
         Prepare init params.
 
         """
+        self.name = 'line'
         if isinstance(param1, Segment):
             point1_x = param1.begin.x
             point1_y = param1.begin.y
@@ -64,4 +65,7 @@ class Line:
         dx = point2_x - point1_x
         dy = point2_y - point1_y
         dz = point2_z - point1_z
-        self.vector = Vector(dx, dy, dz)
+        self.parallel_vector = Vector(dx, dy, dz)
+
+    def __str__(self):
+        return 'line[' + str(self.point1) + ', ' + str(self.parallel_vector) + ']'

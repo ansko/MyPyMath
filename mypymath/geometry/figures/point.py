@@ -8,6 +8,7 @@ class Point:
         Prepare init params.
 
         """
+        self.name = 'point'
         if isinstance(param1, Point) or isinstance(param1, Vector):
             point_x = param1.x
             point_y = param1.y
@@ -32,3 +33,18 @@ class Point:
         self.x = point_x
         self.y = point_y
         self.z = point_z
+
+    def __str__(self):
+        return ('pt(' + str(self.x) +
+                 ', ' + str(self.y) +
+                 ', ' + str(self.z) + ')')
+
+
+    def translate(self, vector):
+        self.x += vector.x
+        self.y += vector.y
+        self.z += vector.z
+
+
+    def translated(self, vector):
+        return Point(self.x + vector.x, self.y + vector.y, self.z + vector.z)

@@ -9,9 +9,9 @@ class Vector:
         if param1 is not None and param2 is None and param3 is None:
             # Init by segment.
             try:
-                x = param1.end.x - param1.begin.x
-                y = param1.end.y - param1.begin.y
-                z = param1.end.z - param1.begin.z
+                x = float(param1.end.x - param1.begin.x)
+                y = float(param1.end.y - param1.begin.y)
+                z = float(param1.end.z - param1.begin.z)
             except:
                 print('Error in Vector.__init__:',
                       'incorrect type of input arguments')
@@ -19,9 +19,9 @@ class Vector:
         elif param1 is not None and param2 is not None and param3 is None:
             # Init by 2 points.
             try:
-                x = param2.x - param1.x
-                y = param2.y - param1.y
-                z = param2.z - param1.z
+                x = float(param2.x - param1.x)
+                y = float(param2.y - param1.y)
+                z = float(param2.z - param1.z)
             except:
                 print('Error in Vector.__init__:',
                       'incorrect type of input arguments')
@@ -29,9 +29,9 @@ class Vector:
         elif param1 is not None and param2 is not None and param3 is not None:
             # Init by 3 coordinates.
             try:
-                x = param1
-                y = param2
-                z = param3
+                x = float(param1)
+                y = float(param2)
+                z = float(param3)
             except:
                 print('Error in Vector.__init__:',
                       'incorrect type of input arguments')
@@ -55,7 +55,7 @@ class Vector:
         return 'vec(' + str(self.x) + ', ' + str(self.y) + '. ' + str(self.z) + ')'
 
     def __neg__(self):
-        return Vector(x=-self.x, y=-self.y, z=-self.z)
+        return Vector(-self.x, -self.y, -self.z)
 
 
     """
@@ -76,8 +76,8 @@ class Vector:
     """
         A group of methods to change self.
     """
-    def multiply_by_number(self, number):
-        if number == 0:
+    def multiply_by_number(self, number, debug_flag=False):
+        if number == 0 and debug_flag:
             print('warning:',
                   'vector multiply_by_number: number is 0!')
         self.x *= number

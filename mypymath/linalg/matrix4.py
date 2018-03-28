@@ -1,10 +1,10 @@
 class Matrix4:
     def __init__(self,
+                 elements=None,
                  a11=None, a12=None, a13=None, a14 = None,
                  a21=None, a22=None, a23=None, a24 = None,
                  a31=None, a32=None, a33=None, a34 = None,
-                 a41=None, a42=None, a43=None, a44 = None,
-                 elements=None):
+                 a41=None, a42=None, a43=None, a44 = None):
         """
             | a11 a12 a13 a14 |
         A = | a21 a22 a23 a24 |
@@ -17,28 +17,24 @@ class Matrix4:
                     a41, a42, a43, a44)
 
         """
-        if (a11 is not None and a12 is not None and a13 is not None and
-            a21 is not None and a22 is not None and a23 is not None and
-            a31 is not None and a32 is not None and a33 is not None and
-            a41 is not None and a42 is not None and a43 is not None and
-            a14 is not None and a24 is not None and a34 is not None and
-            a44 is not None):
-                self.a11 = a11
-                self.a12 = a12
-                self.a13 = a13
-                self.a14 = a14
-                self.a21 = a21
-                self.a22 = a22
-                self.a23 = a23
-                self.a24 = a24
-                self.a31 = a31
-                self.a32 = a32
-                self.a33 = a33
-                self.a34 = a34
-                self.a41 = a41
-                self.a42 = a42
-                self.a43 = a43
-                self.a44 = a44
+        if not None in (a11, a12, a13, a14, a21, a22, a23, a24,
+                        a31, a32, a33, a34, a41, a42, a43, a44):
+            self.a11 = a11
+            self.a12 = a12
+            self.a13 = a13
+            self.a14 = a14
+            self.a21 = a21
+            self.a22 = a22
+            self.a23 = a23
+            self.a24 = a24
+            self.a31 = a31
+            self.a32 = a32
+            self.a33 = a33
+            self.a34 = a34
+            self.a41 = a41
+            self.a42 = a42
+            self.a43 = a43
+            self.a44 = a44
         elif elements is not None and len(elements) == 16:
             self.a11 = elements[0]
             self.a12 = elements[1]

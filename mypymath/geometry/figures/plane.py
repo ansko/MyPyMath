@@ -17,6 +17,7 @@ class Plane:
                                                             # (vec, vec) or
                                                             # (seg, seg) or
                                                             # (line, line)
+        self.name = 'plane'
         if (isinstance(param1, (float, int)) and
                 isinstance(param2, (float, int)) and
                 isinstance(param3, (float, int)) and
@@ -125,21 +126,12 @@ class Plane:
         using three points' coordinates.
 
         """
-        point1_x = point1.x
-        point1_y = point1.y
-        point1_z = point1.z
-        point2_x = point2.x
-        point2_y = point2.y
-        point2_z = point2.z
-        point3_x = point3.x
-        point3_y = point3.y
-        point3_z = point3.z
-        minor_x = ((point2_y - point1_y) * (point3_z - point1_z) -
-                   (point3_y - point1_y) * (point2_z - point1_z))
-        minor_y = ((point3_x - point1_x) * (point2_z - point1_z) -
-                   (point2_z - point1_x) * (point3_x - point1_z))
-        minor_z = ((point2_x - point1_x) * (point3_y - point1_y) -
-                   (point2_y - point1_y) * (point3_x - point1_x))
+        minor_x = ((point2.y - point1.y) * (point3.z - point1.z) -
+                   (point3.y - point1.y) * (point2.z - point1.z))
+        minor_y = ((point2.x - point1.x) * (point3.z - point1.z) -
+                   (point3.x - point1.x) * (point2.z - point1.z))
+        minor_z = ((point2.x - point1.x) * (point3.y - point1.y) -
+                   (point2.y - point1.y) * (point3.x - point1.x))
         if minor_x == 0 and minor_y == 0 and minor_z == 0:
             print('Error in Plane.__init__:',
                   '3 points lie on a single line')
@@ -148,36 +140,48 @@ class Plane:
             a = 0
             b = 0
             c = 1
-            d = -point1_z
+            d = -point1.z
         elif minor_x == 0 and minor_z == 0:
             a = 0
             b = 1
             c = 0
-            d = -point1_y
+            d = -point1.y
         elif minor_y == 0 and minor_z == 0:
             a = 1
             b = 0
             c = 0
-            d = -point1_x
+            d = -point1.x
         elif minor_x == 0:
             a = 0
-            b = 1
-            c = minor_z / minor_y
-            d = -point1_y - minor_z/minor_y*point1_z
+            b = minor_y
+            c = minor_z
+            d = -point1.y*minor_y - minor_z*point1.z
         elif minor_y == 0:
-            a = 1
+            a = minor_x
             b = 0
-            c = minor_z / minor_x
-            d = -point1_x - minor_z/minor_x*point1_z
+            c = minor_z
+            d = -point1.x*minor_x - minor_z*point1.z
         elif minor_z == 0:
-            a = 1
-            b = minor_y / minor_x
+            a = minor_x
+            b = minor_y
             c = 0
-            d = -point1_x - minor_y/minor_x*point1_y
+            d = -point1.x*minor_x - minor_y*point1.y
         else:
-            a = 1
-            b = minor_y / minor_x
-            c = minor_z / minor_x
-            d = -point1_x - minor_y/minor_x*point1_y - minor_z/minor_x*point1_z
+            a = minor_x
+            b = minor_y
+            c = minor_z
+            d = -point1.x*minor_x - minor_y*point1.y - minor_z*point1.z
         self.__init_primitive(a, b, c, d)
         return
+
+    def __str__(self):
+        return ('plane(' + str(self.a) +
+                    ', ' + str(self.b) +
+                    ', ' + str(self.c) +
+                    ', ' + str(self.d) + ')')
+
+    def get_point_sign(self, point):
+        value = self.a*point.x + self.b*point.y + self.c*point.z + self.d
+        if value == 0:
+            return 0
+        return value / abs(value)

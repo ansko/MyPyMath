@@ -1,15 +1,14 @@
 class Matrix2:
     def __init__(self,
+                 elements=None,
                  a11=None, a12=None,
-                 a21=None, a22=None,
-                 elements=None):
+                 a21=None, a22=None):
         """
             | a11 a12 |
         A = | a21 a22 |
         elements = (a11, a12, a21, a22)
         """
-        if (a11 is not None and a12 is not None and
-            a21 is not None and a22 is not None):
+        if not None in (a11, a12, a22, a21):
                 self.a11 = a11
                 self.a12 = a12
                 self.a21 = a21

@@ -1,9 +1,9 @@
 class Matrix3:
     def __init__(self,
+                 elements=None,
                  a11=None, a12=None, a13=None,
                  a21=None, a22=None, a23=None,
-                 a31=None, a32=None, a33=None,
-                 elements=None):
+                 a31=None, a32=None, a33=None):
         """
             | a11 a12 a13 |
         A = | a21 a22 a23 |
@@ -12,9 +12,7 @@ class Matrix3:
         elements = (a11, a12, a13, a21, a22, a23, a31, a32, a33)
 
         """
-        if (a11 is not None and a12 is not None and a13 is not None and
-            a21 is not None and a22 is not None and a23 is not None and
-            a31 is not None and a32 is not None and a33 is not None):
+        if not None in (a11, a12, a13, a21, a22, a23, a31, a32, a33):
                 self.a11 = a11
                 self.a12 = a12
                 self.a13 = a13

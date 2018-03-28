@@ -11,6 +11,7 @@ class Segment:
         Prepare init params.
 
         """
+        self.name = 'segment'
         if isinstance(param1, Vector):
             point1_x = 0
             point1_y = 0
@@ -60,3 +61,14 @@ class Segment:
         """
         self.begin = Point(point1_x, point1_y, point1_z)
         self.end = Point(point2_x, point2_y, point2_z)
+
+    def __str__(self):
+        return 'seg[' + str(self.begin) + ', ' + str(self.end) + ']'
+    #
+    # Some properties.
+    #
+    def length(self):
+        dx = self.end.x - self.begin.x
+        dy = self.end.y - self.begin.y
+        dz = self.end.z - self.begin.z
+        return (dx**2 + dy**2 + dz**2)**0.5
