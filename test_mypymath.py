@@ -232,7 +232,7 @@ def test_distances(debug_flag=True):
 
 
 def test_everything_possible():
-    debug_flag = False
+    debug_flag = True
     print('Testing inits:', end=' ')
     test_inits()
     print('ok')

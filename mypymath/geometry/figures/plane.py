@@ -32,7 +32,7 @@ class Plane:
         elif isinstance(param1, Point):
             point1_x = param1.x
             point1_y = param1.y
-            point1_z = param1.x
+            point1_z = param1.z
             if isinstance(param2, Vector):
                 # Init by point and normal
                 normal_x = param2.x

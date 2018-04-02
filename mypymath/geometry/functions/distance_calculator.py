@@ -135,7 +135,7 @@ class DistanceCalculator:
         dx = point2.x - point1.x
         dy = point2.y - point1.y
         dz = point2.z - point1.z
-        return (dx**2 + dy**2 + dz**2)**0.
+        return (dx**2 + dy**2 + dz**2)**0.5
 
     def __distance_point_line(self, point, line):
         """
@@ -585,7 +585,12 @@ class DistanceCalculator:
         return self.__distance_segment_plane(segment, plane)
 
     def __distance_plane_plane(self, plane1, plane2):
-        if plane1.a != plane2.a or plane1.b != plane2.b or plane1.c != plane2.c:
+        # normal1 =  (+-)normal2 otherwise they cross
+        if (plane1.a != plane2.a or
+            plane1.b != plane2.b or
+            plane1.c != plane2.c) and (plane1.a != -plane2.a and
+                                       plane1.b != -plane2.b and
+                                       plane1.c != -plane2.c):
             return 0
         return abs(plane1.d - plane2.d)
 
@@ -623,15 +628,16 @@ class DistanceCalculator:
 
     def __distance_polygon_polygon(self, polygon1, polygon2):
         # result = min_edge_edge_distance if one does not contain another
-        distance = self.__distance_segment_segment
-        edge1 = Segment(polygon1.vertices[0], polygon1.vertices[-1])
-        edge2 = Segment(polygon2.vertices[0], polygon2.vertices[-1])
-        min_distance = distance(edge1, edge2) # start value
+        distance = self.__distance_segment_polygon
+        distances12 = [] # distnaces from edges of polygon1 to polygon2
+        distances21 = [] # distances from edges of polygon2 to polygon1
         for i in range(len(polygon1.vertices)):
             edge1 = Segment(polygon1.vertices[i], polygon1.vertices[i - 1])
-            for j in range(len(polygon2.vertices)):
-                edge2 = Segment(polygon2.vertices[j], polygon2.vertices[j - 1])
-                min_distance = min(min_distance, distance(edge1, edge2))
+            distances12.append(distance(edge1, polygon2))
+        for i in range(len(polygon2.vertices)):
+            edge2 = Segment(polygon2.vertices[i], polygon2.vertices[i - 1])
+            distances21.append(distance(edge2, polygon1))
+        min_distance = min(min(distances12), min(distances12))
         ac = AffinityChecker()
         if ac.check(polygon1, polygon2) or ac.check(polygon2, polygon1):
             return 0
